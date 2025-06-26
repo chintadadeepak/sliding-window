@@ -4,6 +4,8 @@
 
 1. Constant Window
 2. Longest Subarray Array or Substring
+3. Count subarrays with condition
+4. Minimum / Smallest window
 
 ## Naive Solution for constant window
 
@@ -20,6 +22,9 @@ int largestSum(vector<int> &nums, int k) {
     }
     return result;
 }
+
+TC: O(n*n)
+SC: O(1)
 ```
 
 ## Two Pointer Solution for constant window
@@ -40,6 +45,9 @@ int largestSum(vector<int> &nums, int k) {
     }
     return result;
 }
+
+TC: O(2*n)
+SC: O(1)
 ```
 
 ## Naive Solution for Longest Subarray with condition
@@ -61,6 +69,9 @@ int longestSubarray(vector<int> &nums, int k) {
     }
     return result;
 }
+
+TC: O(n*n)
+SC: O(1)
 ```
 
 ## Better Solution for Longest Subarray with condition
@@ -73,12 +84,36 @@ int longestSubarray(vector<int> &nums, int k) {
     int sum = 0;
     while(right < size) {
         sum += nums[right];
-        while(sum > k) 
+        while(sum > k)
             sum -= nums[left++];
         result = max(result, right - left + 1);
         right++;
     }
     return result;
 }
+
+TC: O(2*n)
+SC: O(1)
 ```
 
+## Optimal Solution for Longest Subarray with condition
+
+```cpp
+int longestSubarray(vector<int> &nums, int k) {
+    int size = nums.size();
+    int result = INT_MIN;
+    int left = right = 0;
+    int sum = 0;
+    while(right < size) {
+        sum += nums[right];
+        if(sum > k)
+            sum -= nums[left++];
+        result = max(result, right - left + 1);
+        right++;
+    }
+    return result;
+}
+
+TC: O(n)
+SC: O(1)
+```
